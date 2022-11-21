@@ -46,12 +46,8 @@ export function activate(context: vscode.ExtensionContext) {
 		wsedit.insert(fileTsxPath, new vscode.Position(0, 0), componentContent)
 		wsedit.insert(fileSassPath, new vscode.Position(0, 0), sassContent)
 
-		vscode.workspace.applyEdit(wsedit)
-
-		// disgusting
-		setTimeout(() => {
-			vscode.workspace.saveAll()
-		}, 1000);
+		await vscode.workspace.applyEdit(wsedit, { isRefactoring: true })
+		await vscode.workspace.saveAll()
 	});
 
 
@@ -103,10 +99,8 @@ export function activate(context: vscode.ExtensionContext) {
 		editor.edit((editBuilder) =>  editBuilder.insert(editor.selection.active, `<${compName} />`) )
 
 
-		// disgusting
-		setTimeout(() => {
-			vscode.workspace.saveAll()
-		}, 1000);
+		await vscode.workspace.applyEdit(wsedit, { isRefactoring: true })
+		await vscode.workspace.saveAll()
 	});
 
 
